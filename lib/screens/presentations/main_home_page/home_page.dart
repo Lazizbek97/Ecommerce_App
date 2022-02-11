@@ -84,7 +84,9 @@ class _MainHomePageState extends State<MainHomePage>
                   children: [
                     const Expanded(child: TextInputField()),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {});
+                      },
                       icon: const Icon(Icons.menu),
                     ),
                   ],
