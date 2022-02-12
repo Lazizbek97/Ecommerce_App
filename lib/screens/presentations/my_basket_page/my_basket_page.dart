@@ -4,17 +4,22 @@ import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
+import '../../../provider/hive_provider.dart';
 import 'components/input_field.dart';
 import 'components/payment_buttons.dart';
 
 class MyBasketPage extends StatelessWidget {
-  MyBasketPage({Key? key}) : super(key: key);
+  const MyBasketPage({Key? key}) : super(key: key);
 
-  List<FoodsModel> foods = HiveBoxes.getFoods().values.toList();
+  // List<FoodsModel> foods = HiveBoxes.getFoods().values.toList();
 
   @override
   Widget build(BuildContext context) {
+    List<FoodsModel> provider =
+        context.watch<HiveProvider>().foodBox.values.toList();
+
     return Scaffold(
       backgroundColor: Constants.orange_background,
       body: SafeArea(
@@ -59,8 +64,9 @@ class MyBasketPage extends StatelessWidget {
                   itemBuilder: ((context, index) => Dismissible(
                         key: UniqueKey(),
                         onDismissed: (direction) async {
-                          Box<FoodsModel> box = HiveBoxes.getFoods();
-                          await box.deleteAt(index);
+                          await context
+                              .read<HiveProvider>()
+                              .removeToBasket(index);
                         },
                         child: ListTile(
                           leading: Container(
@@ -71,26 +77,42 @@ class MyBasketPage extends StatelessWidget {
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Image.asset(foods[index].img.toString()),
+                            child: Image.asset(provider[index].img.toString()),
                           ),
                           title: Text(
-                            foods[index].name.toString(),
+                            provider[index].name.toString(),
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600),
                           ),
-                          subtitle: const Text(
-                            "1 packs",
-                            style: TextStyle(fontWeight: FontWeight.w600),
+                          subtitle: Row(
+                            children: [
+                              const Text(
+                                "1 packs",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                color: Constants.orange_background,
+                                width: 3,
+                                height: 15,
+                              ),
+                              Text(
+                                "x ${provider[index].count}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
                           ),
                           trailing: Text(
-                            "W ${foods[index].price}",
+                            "W ${provider[index].price}",
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                         ),
                       )),
                   separatorBuilder: (context, index) => const Divider(),
-                  itemCount: foods.length,
+                  itemCount: provider.length,
                 ),
               ),
             ),

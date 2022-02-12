@@ -8,6 +8,7 @@ class Constants {
   static String quinoa = "assets/images/quinoa.png";
   static String order_taken = "assets/images/order_taken.png";
   static String order_prepared = "assets/images/order_prepared.png";
+  static String heart_filled = "assets/images/heart_filled.png";
 
   static String shadow1_image = "assets/images/shadow1.png";
   static String shadow2_image = "assets/images/shadow2.png";

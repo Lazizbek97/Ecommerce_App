@@ -42,8 +42,10 @@ dependencies:
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   hive_generator: ^1.1.2
-  build_runner: ^2.1.7
+ 
   path_provider: ^2.0.9
+  build_runner: ^2.1.7
+  provider: ^6.0.2
   
 
 dev_dependencies:

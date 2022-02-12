@@ -1,19 +1,23 @@
-import 'package:ecommerce/core/hive/add_hive.dart';
-import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:ecommerce/screens/presentations/about_product_page/components/add_remove_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/hive_provider.dart';
 
 class AboutProductPage extends StatelessWidget {
-  AboutProductPage({Key? key, required this.food}) : super(key: key);
+  AboutProductPage({Key? key, required this.foodIndex}) : super(key: key);
 
-  FoodsModel food;
+  int foodIndex;
 
   @override
   Widget build(BuildContext context) {
+    HiveProvider provider = context.watch<HiveProvider>();
+
     return Scaffold(
+      
       backgroundColor: Constants.orange_background,
       body: SafeArea(
         child: Column(
@@ -26,7 +30,7 @@ class AboutProductPage extends StatelessWidget {
                     width: double.infinity,
                     child: Center(
                       child: Image.asset(
-                        food.img.toString(),
+                        provider.foodsList[foodIndex].img.toString(),
                         fit: BoxFit.cover,
                         height: getHeight(200),
                       ),
@@ -69,7 +73,7 @@ class AboutProductPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            food.name.toString(),
+                            provider.foodsList[foodIndex].name.toString(),
                             style: const TextStyle(
                                 fontSize: 32, fontWeight: FontWeight.w600),
                           ),
@@ -79,23 +83,30 @@ class AboutProductPage extends StatelessWidget {
                               Row(
                                 children: [
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      context.read<HiveProvider>().removeCount(
+                                          provider.foodsList[foodIndex]);
+                                    },
                                     child: Add_remove_button(
                                         backColor: Colors.white,
                                         borderColor: Colors.black,
                                         icon: Icons.remove,
                                         iconColor: Colors.black),
                                   ),
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
                                     child: Text(
-                                      "1",
-                                      style: TextStyle(fontSize: 24),
+                                      provider.foodsList[foodIndex].count
+                                          .toString(),
+                                      style: const TextStyle(fontSize: 24),
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      context.read<HiveProvider>().addCount(
+                                          provider.foodsList[foodIndex]);
+                                    },
                                     child: Add_remove_button(
                                         icon: Icons.add,
                                         backColor: Constants.plus_color,
@@ -105,7 +116,7 @@ class AboutProductPage extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "W ${food.price}",
+                                "W ${provider.foodsList[foodIndex].price}",
                                 style: const TextStyle(
                                   fontSize: 24,
                                 ),
@@ -134,7 +145,7 @@ class AboutProductPage extends StatelessWidget {
                                       width: 2))),
                         ),
                         Text(
-                          food.ingr.toString(),
+                          provider.foodsList[foodIndex].ingr.toString(),
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w400),
                         )
@@ -164,7 +175,10 @@ class AboutProductPage extends StatelessWidget {
                               width: getWidth(230),
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  await AddingToHive.saveToBasket(food);
+                                  await context
+                                      .read<HiveProvider>()
+                                      .saveToBasket(
+                                          provider.foodsList[foodIndex]);
                                 },
                                 child: const Text("Add to basket"),
                                 style: ElevatedButton.styleFrom(

@@ -2,8 +2,10 @@ import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/core/service/food_service.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
+import 'package:ecommerce/provider/hive_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../../core/widgets/product_card.dart';
 import 'components/search_input.dart';
 
@@ -18,6 +20,7 @@ class _MainHomePageState extends State<MainHomePage>
     with TickerProviderStateMixin {
   late TabController _tabController;
   List<FoodsModel> foodsList = FoodsService.fetchData();
+  List popUpMenuItems = ["Favorites", "Recommended"];
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
@@ -25,6 +28,7 @@ class _MainHomePageState extends State<MainHomePage>
 
   @override
   Widget build(BuildContext context) {
+    var provider = context.watch<HiveProvider>();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 40,
@@ -85,11 +89,20 @@ class _MainHomePageState extends State<MainHomePage>
                 child: Row(
                   children: [
                     const Expanded(child: TextInputField()),
-                    IconButton(
-                      onPressed: () {
-                        
+                    PopupMenuButton(
+                      child: const Icon(Icons.menu),
+                      onSelected: (int i) {
+                        print(i);
                       },
-                      icon: const Icon(Icons.menu),
+                      itemBuilder: (context) {
+                        return List.generate(
+                          popUpMenuItems.length,
+                          (index) => PopupMenuItem(
+                            value: index,
+                            child: Text(popUpMenuItems[index].toString()),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -113,9 +126,8 @@ class _MainHomePageState extends State<MainHomePage>
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: ((context, index) => ProcductCard(
-                      color: Constants.product_back_color,
-                      food: foodsList[index])),
-                  itemCount: foodsList.length,
+                      color: Constants.product_back_color, foodIndex: index)),
+                  itemCount: provider.foodsList.length,
                 ),
               ),
               Padding(
@@ -149,10 +161,12 @@ class _MainHomePageState extends State<MainHomePage>
               SizedBox(
                 height: getHeight(200),
                 child: ListView.builder(
-                  itemCount: foodsList.length,
+                  itemCount: provider.foodsList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProcductCard(
-                      color: Constants.quinoa_color, food: foodsList[index]),
+                    color: Constants.quinoa_color,
+                    foodIndex: index,
+                  ),
                 ),
               ),
             ],

@@ -5,6 +5,8 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/honey_lime.png",
     "price": 2000,
+    "isFavorite": false,
+    "count":1,
   },
   {
     "name": "Berry mango combo",
@@ -12,6 +14,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/berry_mango.png",
     "price": 8000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Quinoa fruit salad",
@@ -19,6 +24,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/quinoa.png",
     "price": 10000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Tropical fruit salad",
@@ -26,6 +34,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/tropical_fruit.png",
     "price": 10000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Biryani salad",
@@ -33,6 +44,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/biryani.png",
     "price": 4000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Checken Salad",
@@ -40,6 +54,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/checken_salad.png",
     "price": 3500,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Chinese checken",
@@ -47,6 +64,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/chinese_checken.png",
     "price": 6000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Greek Salad",
@@ -54,6 +74,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/greeksalad.png",
     "price": 8000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Juice Caesar",
@@ -61,6 +84,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/juice_caesar.png",
     "price": 12000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Spanish salad",
@@ -68,6 +94,9 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/spanich_salad.png",
     "price": 9000,
+    "isFavorite": false,
+    "count":1,
+
   },
   {
     "name": "Vegetable salad",
@@ -75,5 +104,8 @@ List foods_data = [
         "Red Quinoa, Lime, Honey, Blueberries, Strawberries, Mango, Fresh mint.",
     "img": "assets/images/vegetable_salad.png",
     "price": 2000,
+    "isFavorite": false,
+    "count":1,
+
   },
 ];
