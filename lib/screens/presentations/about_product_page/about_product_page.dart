@@ -1,3 +1,5 @@
+import 'package:ecommerce/core/hive/add_hive.dart';
+import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:ecommerce/screens/presentations/about_product_page/components/add_remove_button.dart';
@@ -5,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AboutProductPage extends StatelessWidget {
-  const AboutProductPage({Key? key}) : super(key: key);
+  AboutProductPage({Key? key, required this.food}) : super(key: key);
+
+  FoodsModel food;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class AboutProductPage extends StatelessWidget {
                     width: double.infinity,
                     child: Center(
                       child: Image.asset(
-                        Constants.quinoa,
+                        food.img.toString(),
                         fit: BoxFit.cover,
                         height: getHeight(200),
                       ),
@@ -64,9 +68,9 @@ class AboutProductPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Qunia Fruit Salad",
-                            style: TextStyle(
+                          Text(
+                            food.name.toString(),
+                            style: const TextStyle(
                                 fontSize: 32, fontWeight: FontWeight.w600),
                           ),
                           Row(
@@ -100,9 +104,9 @@ class AboutProductPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const Text(
-                                "W 2,000",
-                                style: TextStyle(
+                              Text(
+                                "W ${food.price}",
+                                style: const TextStyle(
                                   fontSize: 24,
                                 ),
                               ),
@@ -129,9 +133,9 @@ class AboutProductPage extends StatelessWidget {
                                       color: Constants.orange_background,
                                       width: 2))),
                         ),
-                        const Text(
-                          "Red Qunioa, Lime, Honey, Blueberries, Stawberries, Mango, Fresh mint",
-                          style: TextStyle(
+                        Text(
+                          food.ingr.toString(),
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w400),
                         )
                       ],
@@ -159,7 +163,9 @@ class AboutProductPage extends StatelessWidget {
                               height: getHeight(50),
                               width: getWidth(230),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await AddingToHive.saveToBasket(food);
+                                },
                                 child: const Text("Add to basket"),
                                 style: ElevatedButton.styleFrom(
                                     primary: Constants.orange_background),

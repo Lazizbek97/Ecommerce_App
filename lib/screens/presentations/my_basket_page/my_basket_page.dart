@@ -1,12 +1,17 @@
+import 'package:ecommerce/core/hive/hive_boxes.dart';
+import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import 'components/input_field.dart';
 import 'components/payment_buttons.dart';
 
 class MyBasketPage extends StatelessWidget {
-  const MyBasketPage({Key? key}) : super(key: key);
+  MyBasketPage({Key? key}) : super(key: key);
+
+  List<FoodsModel> foods = HiveBoxes.getFoods().values.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,13 @@ class MyBasketPage extends StatelessWidget {
               child: Container(
                 color: Colors.white,
                 child: ListView.separated(
-                    itemBuilder: ((context, index) => ListTile(
+                  itemBuilder: ((context, index) => Dismissible(
+                        key: UniqueKey(),
+                        onDismissed: (direction) async {
+                          Box<FoodsModel> box = HiveBoxes.getFoods();
+                          await box.deleteAt(index);
+                        },
+                        child: ListTile(
                           leading: Container(
                             height: 60,
                             width: 60,
@@ -60,25 +71,27 @@ class MyBasketPage extends StatelessWidget {
                               color: Colors.orange,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Image.asset(Constants.quinoa),
+                            child: Image.asset(foods[index].img.toString()),
                           ),
-                          title: const Text(
-                            "Qunioa fruit salad",
-                            style: TextStyle(
+                          title: Text(
+                            foods[index].name.toString(),
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600),
                           ),
                           subtitle: const Text(
                             "1 packs",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          trailing: const Text(
-                            "W 23,000",
-                            style: TextStyle(
+                          trailing: Text(
+                            "W ${foods[index].price}",
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.w600),
                           ),
-                        )),
-                    separatorBuilder: (context, index) => const Divider(),
-                    itemCount: 3),
+                        ),
+                      )),
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: foods.length,
+                ),
               ),
             ),
             Container(

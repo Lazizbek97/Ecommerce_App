@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/screens/presentations/delevery_status/delevery_status.dart';
 import 'package:ecommerce/screens/presentations/login_page/login_info.dart';
 import 'package:ecommerce/screens/presentations/login_page/login_name_page.dart';
@@ -23,9 +24,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: ((context) => const MainHomePage()));
       case "/about_product":
         return MaterialPageRoute(
-            builder: ((context) => const AboutProductPage()));
+            builder: ((context) => AboutProductPage(
+                  food: args as FoodsModel,
+                )));
       case "/basket":
-        return MaterialPageRoute(builder: ((context) => const MyBasketPage()));
+        return MaterialPageRoute(builder: ((context) =>  MyBasketPage()));
       case "/completed":
         return MaterialPageRoute(
             builder: ((context) => const PaymentCompleted()));

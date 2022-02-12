@@ -53,15 +53,14 @@ class LoginNamePage extends StatelessWidget {
                     height: getHeight(60),
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pushNamed(context, "/start_page");
                       },
                       child: const Text("Sart Ordering"),
                       style: ElevatedButton.styleFrom(
-                          primary: Constants.orange_background,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          )),
+                        borderRadius: BorderRadius.circular(15),
+                      )),
                     ),
                   ),
                 ],

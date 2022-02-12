@@ -1,8 +1,9 @@
+import 'package:ecommerce/core/model/foods_model.dart';
+import 'package:ecommerce/core/service/food_service.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../core/widgets/product_card.dart';
 import 'components/search_input.dart';
 
@@ -16,6 +17,7 @@ class MainHomePage extends StatefulWidget {
 class _MainHomePageState extends State<MainHomePage>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  List<FoodsModel> foodsList = FoodsService.fetchData();
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
@@ -85,7 +87,7 @@ class _MainHomePageState extends State<MainHomePage>
                     const Expanded(child: TextInputField()),
                     IconButton(
                       onPressed: () {
-                        setState(() {});
+                        
                       },
                       icon: const Icon(Icons.menu),
                     ),
@@ -111,12 +113,9 @@ class _MainHomePageState extends State<MainHomePage>
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: ((context, index) => ProcductCard(
-                        color: Constants.product_back_color,
-                        img: Constants.honey_lime,
-                        name: "Honey lime combo",
-                        price: "2000",
-                      )),
-                  itemCount: 10,
+                      color: Constants.product_back_color,
+                      food: foodsList[index])),
+                  itemCount: foodsList.length,
                 ),
               ),
               Padding(
@@ -150,14 +149,10 @@ class _MainHomePageState extends State<MainHomePage>
               SizedBox(
                 height: getHeight(200),
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: foodsList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => ProcductCard(
-                    color: Constants.quinoa_color,
-                    img: Constants.quinoa,
-                    name: "Quinoa fruit salad",
-                    price: "10,000",
-                  ),
+                      color: Constants.quinoa_color, food: foodsList[index]),
                 ),
               ),
             ],
