@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/constants.dart';
 import '../../../core/utils/size_config.dart';
 import 'components/name_input_feild.dart';
 
 class LoginNamePage extends StatelessWidget {
-  const LoginNamePage({Key? key}) : super(key: key);
+  LoginNamePage({Key? key}) : super(key: key);
+
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +51,17 @@ class LoginNamePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextInputField(hintText: "Name"),
+                  TextInputField(hintText: "Name", textController: _controller),
                   SizedBox(
                     height: getHeight(60),
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        _controller.text != ""
+                            ? await prefs.setString("user", _controller.text)
+                            : await prefs.setString("user", "Guest");
+
                         Navigator.pushNamed(context, "/start_page");
                       },
                       child: const Text("Sart Ordering"),

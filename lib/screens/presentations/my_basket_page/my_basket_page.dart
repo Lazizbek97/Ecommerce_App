@@ -1,19 +1,15 @@
-import 'package:ecommerce/core/hive/hive_boxes.dart';
 import 'package:ecommerce/core/model/foods_model.dart';
 import 'package:ecommerce/core/utils/constants.dart';
 import 'package:ecommerce/core/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/hive_provider.dart';
+import '../../provider/hive_provider.dart';
 import 'components/input_field.dart';
 import 'components/payment_buttons.dart';
 
 class MyBasketPage extends StatelessWidget {
   const MyBasketPage({Key? key}) : super(key: key);
-
-  // List<FoodsModel> foods = HiveBoxes.getFoods().values.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -125,15 +121,15 @@ class MyBasketPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Total",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "W 60,000",
-                        style: TextStyle(
+                        "W ${context.watch<HiveProvider>().total}",
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.w600),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,

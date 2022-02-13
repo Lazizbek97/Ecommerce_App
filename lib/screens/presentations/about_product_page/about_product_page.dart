@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/hive_provider.dart';
+import '../../provider/hive_provider.dart';
 
 class AboutProductPage extends StatelessWidget {
   AboutProductPage({Key? key, required this.foodIndex}) : super(key: key);
@@ -17,7 +17,6 @@ class AboutProductPage extends StatelessWidget {
     HiveProvider provider = context.watch<HiveProvider>();
 
     return Scaffold(
-      
       backgroundColor: Constants.orange_background,
       body: SafeArea(
         child: Column(
@@ -67,64 +66,62 @@ class AboutProductPage extends StatelessWidget {
                 ),
                 child: Column(children: [
                   Expanded(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            provider.foodsList[foodIndex].name.toString(),
-                            style: const TextStyle(
-                                fontSize: 32, fontWeight: FontWeight.w600),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      context.read<HiveProvider>().removeCount(
-                                          provider.foodsList[foodIndex]);
-                                    },
-                                    child: Add_remove_button(
-                                        backColor: Colors.white,
-                                        borderColor: Colors.black,
-                                        icon: Icons.remove,
-                                        iconColor: Colors.black),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Text(
-                                      provider.foodsList[foodIndex].count
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 24),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      context.read<HiveProvider>().addCount(
-                                          provider.foodsList[foodIndex]);
-                                    },
-                                    child: Add_remove_button(
-                                        icon: Icons.add,
-                                        backColor: Constants.plus_color,
-                                        iconColor: Constants.orange_background,
-                                        borderColor: Constants.plus_color),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "W ${provider.foodsList[foodIndex].price}",
-                                style: const TextStyle(
-                                  fontSize: 24,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          provider.foodsList[foodIndex].name.toString(),
+                          style: const TextStyle(
+                              fontSize: 32, fontWeight: FontWeight.w600),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    context.read<HiveProvider>().removeCount(
+                                        provider.foodsList[foodIndex]);
+                                  },
+                                  child: Add_remove_button(
+                                      backColor: Colors.white,
+                                      borderColor: Colors.black,
+                                      icon: Icons.remove,
+                                      iconColor: Colors.black),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Text(
+                                    provider.foodsList[foodIndex].count
+                                        .toString(),
+                                    style: const TextStyle(fontSize: 24),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<HiveProvider>().addCount(
+                                        provider.foodsList[foodIndex]);
+                                  },
+                                  child: Add_remove_button(
+                                      icon: Icons.add,
+                                      backColor: Constants.plus_color,
+                                      iconColor: Constants.orange_background,
+                                      borderColor: Constants.plus_color),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              "W ${provider.foodsList[foodIndex].price}",
+                              style: const TextStyle(
+                                fontSize: 24,
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -162,12 +159,15 @@ class AboutProductPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                context.read<HiveProvider>().addToFavorite(
+                                    provider.foodsList[foodIndex]);
+                              },
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Constants.plus_color,
-                                child: SvgPicture.asset(Constants.heart_image,
-                                    height: 24),
+                                child: isLiked(
+                                    provider.foodsList[foodIndex].isFavorite),
                               ),
                             ),
                             SizedBox(
@@ -197,5 +197,15 @@ class AboutProductPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  isLiked(isLiked) {
+    return isLiked
+        ? SizedBox(
+            height: getHeight(30),
+            width: getHeight(30),
+            child: Image.asset(Constants.heart_filled),
+          )
+        : SvgPicture.asset(Constants.heart_image, height: 24);
   }
 }

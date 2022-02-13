@@ -10,9 +10,11 @@ class TextInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+       enabled: false,
       decoration: InputDecoration(
           fillColor: Constants.input_color,
           filled: true,
+
           hintText: "Search for fruit salad combos",
           prefixIcon: const Icon(Icons.search),
           enabledBorder: OutlineInputBorder(

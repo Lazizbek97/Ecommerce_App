@@ -3,6 +3,7 @@ import 'package:ecommerce/screens/presentations/login_page/login_info.dart';
 import 'package:ecommerce/screens/presentations/login_page/login_name_page.dart';
 import 'package:ecommerce/screens/presentations/main_home_page/home_page.dart';
 import 'package:ecommerce/screens/presentations/payment_completed/payment_completed.dart';
+import 'package:ecommerce/screens/presentations/search_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/presentations/about_product_page/about_product_page.dart';
@@ -18,7 +19,7 @@ class RouteGenerator {
       case "/login_info":
         return MaterialPageRoute(builder: ((context) => const LoginInfo()));
       case "/login_name":
-        return MaterialPageRoute(builder: ((context) => const LoginNamePage()));
+        return MaterialPageRoute(builder: ((context) =>  LoginNamePage()));
       case "/start_page":
         return MaterialPageRoute(builder: ((context) => const MainHomePage()));
       case "/about_product":
@@ -27,13 +28,15 @@ class RouteGenerator {
                   foodIndex: args as int,
                 )));
       case "/basket":
-        return MaterialPageRoute(builder: ((context) => MyBasketPage()));
+        return MaterialPageRoute(builder: ((context) => const MyBasketPage()));
       case "/completed":
         return MaterialPageRoute(
             builder: ((context) => const PaymentCompleted()));
       case "/delevery_status":
         return MaterialPageRoute(
             builder: ((context) => const DeleveryStatus()));
+      // case "/search":
+      //   return MaterialPageRoute(builder: ((context) => SearchPage()));
     }
     return null;
   } //
