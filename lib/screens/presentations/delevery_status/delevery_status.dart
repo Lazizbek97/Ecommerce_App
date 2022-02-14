@@ -139,9 +139,9 @@ class VerticalDottedLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: getHeight(50),
+      height: getHeight(40),
       child: ListView.builder(
-          itemCount: 6,
+          itemCount: 4,
           itemBuilder: (context, index) => Padding(
                 padding:
                     EdgeInsets.symmetric(vertical: 1, horizontal: getWidth(41)),
@@ -175,8 +175,8 @@ class OrderSteps extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Container(
-        height: 60,
-        width: 60,
+        height: getHeight(60),
+        width: getHeight(60),
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: const Color(0xffFFFAEB),
